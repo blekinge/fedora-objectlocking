@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.*;
 
 //TODO find the correct location of these rest methods
-@Path("/")
+@Path(BaseRestResource.VALID_PID_PART+"/locking/")
 @Component
 public class LockingRestResource extends BaseRestResource {
     public LockingRestResource(Server server) {
@@ -18,8 +18,7 @@ public class LockingRestResource extends BaseRestResource {
     }
 
     @POST
-    @Path(VALID_PID_PART+"/lock")
-    @Consumes({XML, FORM})
+    @Path("lock")
     public void lockObject(@PathParam(RestParam.PID)
                            String pid) throws IllegalAccessException {
         Context context = getContext();
@@ -34,8 +33,7 @@ public class LockingRestResource extends BaseRestResource {
     }
 
     @POST
-    @Path(VALID_PID_PART+"/unlock")
-    @Consumes({XML, FORM})
+    @Path("unlock")
     public void unlockObject(@PathParam(RestParam.PID)
                              String pid) throws IllegalAccessException {
         Context context = getContext();

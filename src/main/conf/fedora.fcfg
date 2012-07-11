@@ -253,8 +253,8 @@
                  - how bytestreams and java types might be marshalled/demarshalled over the wire
                  - how the storage subsystem is implemented.</comment>
         <param name="decorator1" value="org.fcrepo.server.messaging.NotificationInvocationHandler" />
-        <param name="decorator2" value="org.fcrepo.objectlocking.ImplicitLockingDecorator" />
-        <param name="decorator3" value="org.fcrepo.objectlocking.ExplicitLockingDecorator" />
+        <param name="decorator2" value="org.fcrepo.objectlocking.ExplicitLockingDecorator" />
+        <param name="decorator3" value="org.fcrepo.objectlocking.ImplicitLockingDecorator" />
 		<param name="autoChecksum" value="false">
 			<comment>Controls whether a checksum is automatically computed for
 			every datastream as the datastream is added to the repository. This

@@ -8,7 +8,6 @@ import org.fcrepo.server.rest.RestParam;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.HttpHeaders;
 
 //TODO find the correct location of these rest methods
 @Path("/")
@@ -26,12 +25,10 @@ public class LockingRestResource extends BaseRestResource {
         Context context = getContext();
         //from context, get username
         String username = context.getSubjectValue(Constants.SUBJECT.LOGIN_ID.uri);
-        LockingDatabaseAccessor database = LockingDatabaseAccessor.getInstance();
+        sharedLockResource database = sharedLockResource.getInstance();
 
-        String lockedToUser = database.lockObjectToUser(pid, username);
-        if ("".equals(lockedToUser) || username.equals(lockedToUser)) {
-          //object locked to you
-        } else {
+        boolean locked = database.lockObjectToUser(pid, username);
+        if (!locked) {
             throw new IllegalAccessException("Object is already locked");
         }
     }
@@ -44,7 +41,7 @@ public class LockingRestResource extends BaseRestResource {
         Context context = getContext();
         //from context, get username
         String username = context.getSubjectValue(Constants.SUBJECT.LOGIN_ID.uri);
-        LockingDatabaseAccessor database = LockingDatabaseAccessor.getInstance();
+        sharedLockResource database = sharedLockResource.getInstance();
         boolean result = database.unlockObjectAsUser(pid, username);
         if (!result){
             throw new IllegalAccessException("Object is already locked");
